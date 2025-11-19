@@ -1,4 +1,4 @@
-package common;
+package phillydata.common;
 
 public class Population {
 }

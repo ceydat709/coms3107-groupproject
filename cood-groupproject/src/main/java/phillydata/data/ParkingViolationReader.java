@@ -1,4 +1,4 @@
-package data;
+package phillydata.data;
 
 public class ParkingViolationReader {
 }
