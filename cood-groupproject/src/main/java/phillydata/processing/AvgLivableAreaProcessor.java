@@ -14,7 +14,7 @@ public class AvgLivableAreaProcessor {
         this.properties = properties;
     }
 
-    public int averageLivableArea(String zipCode) {
+    public int avgLivableArea(String zipCode) {
         if (zipCode == null) {
             throw new IllegalArgumentException();
         }
