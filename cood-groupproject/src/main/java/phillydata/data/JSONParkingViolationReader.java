@@ -10,6 +10,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class JSONParkingViolationReader implements ParkingViolationReaderStrategy {
+
+    private String validZip(String zipcode) {
+        if (zipcode == null) return null;
+        if (zipcode.length() < 5) return zipcode;
+        return zipcode.substring(0, 5);
+    }
+
     @Override
     public List<ParkingViolation> getParkingViolations(String filename) {
         try {
@@ -33,6 +40,7 @@ public class JSONParkingViolationReader implements ParkingViolationReaderStrateg
                 } catch (NumberFormatException e) {
                     fine = 0;
                 }
+                zipcode = validZip(zipcode);
                 ParkingViolation pv = new ParkingViolation(timestamp, fine, description, vehicleId, state, violationId, zipcode);
                 violations.add(pv);
             }
