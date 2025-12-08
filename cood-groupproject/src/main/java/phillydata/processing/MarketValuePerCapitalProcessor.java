@@ -44,7 +44,6 @@ public class MarketValuePerCapitalProcessor {
             return 0;
         }
         double sum = 0.0;
-        int numHomes = 0;
 
         for (Property prop : properties) {
             String propZip = "" + prop.getZip_code();
@@ -53,10 +52,9 @@ public class MarketValuePerCapitalProcessor {
 
             if (marketVal <= 0) continue;
             sum += marketVal;
-            numHomes++;
         }
 
-        if (numHomes == 0) {
+        if (sum == 0.0) {
             return 0;
         }
         return (int) Math.round(sum/population);
