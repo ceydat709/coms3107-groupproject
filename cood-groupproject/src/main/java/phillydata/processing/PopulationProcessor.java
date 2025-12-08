@@ -15,6 +15,7 @@ public class PopulationProcessor{
             throw new IllegalStateException();
         }
     }
+    
     public int totalPopulation(){
         int total = 0;
         for (Population p: populations){
