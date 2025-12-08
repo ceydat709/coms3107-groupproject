@@ -1,10 +1,13 @@
 package phillydata.data;
-import phillydata.common.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import phillydata.common.Property;
 
 //implements singleton
 public class PropertyReader {
@@ -46,8 +49,8 @@ public class PropertyReader {
                 }
                 else{ totalLivableArea = -1; }
                 
-                if (validValue(values[indices.get("zip_code")].substring(0,5))){
-                    zipCode = Integer.parseInt(values[indices.get("zip_code")].substring(0,5));
+                if (values[indices.get("zip_code")].length()>=5 && validZipCode(values[indices.get("zip_code")])){
+                    zipCode = Integer.parseInt(values[indices.get("zip_code")].trim().substring(0,5));
                 }
                 else{ zipCode = -1; }
 
@@ -69,6 +72,21 @@ public class PropertyReader {
         try{
             double valueDouble = Double.parseDouble(value);
             return valueDouble > 0;
+        } catch (NumberFormatException e){
+            return false;
+        }
+    }
+    private boolean validZipCode(String value){
+        if(value==null){
+            return false;
+        }
+        value = value.trim();
+        if (value.length()<5){
+            return false;
+        }
+        try{
+            Integer.parseInt(value.substring(0,5));
+            return true;
         } catch (NumberFormatException e){
             return false;
         }
