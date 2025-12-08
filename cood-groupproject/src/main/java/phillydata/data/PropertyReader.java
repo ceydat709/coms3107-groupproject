@@ -6,7 +6,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+//implements singleton
 public class PropertyReader {
+    private static PropertyReader instance;
+
+    private PropertyReader(){}
+
+    public static PropertyReader getInstance(){
+        if (instance==null){
+            instance = new PropertyReader();
+        }
+        return instance;
+    }
+
     public List<Property> getProperties(String filename){
         try(BufferedReader br = new BufferedReader(new FileReader(filename))){
 
@@ -22,7 +34,6 @@ public class PropertyReader {
             String line;
             while ((line = br.readLine()) != null){
                 String[] values = line.split(",",-1);
-                //maybe check to see if values[...] is empty
                 double marketValue,totalLivableArea;
                 int zipCode;
                 if (validValue(values[indices.get("market_value")])){
@@ -33,9 +44,13 @@ public class PropertyReader {
                 if (validValue(values[indices.get("total_livable_area")])){
                     totalLivableArea = Double.parseDouble(values[indices.get("total_livable_area")]);
                 }
-                else { totalLivableArea = -1; }
+                else{ totalLivableArea = -1; }
+                
+                if (validValue(values[indices.get("zip_code")].substring(0,5))){
+                    zipCode = Integer.parseInt(values[indices.get("zip_code")].substring(0,5));
+                }
+                else{ zipCode = -1; }
 
-                zipCode = Integer.parseInt(values[indices.get("zip_code")].substring(0,5));
                 Property p = new Property(marketValue,totalLivableArea,zipCode);
                 properties.add(p);
             }

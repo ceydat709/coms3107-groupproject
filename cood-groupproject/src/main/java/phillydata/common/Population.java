@@ -1,5 +1,4 @@
 package phillydata.common;
-
 public class Population {
     private int zip_code;
     private int population;
