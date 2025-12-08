@@ -5,3 +5,7 @@ target/
 *.iml
 .DS_Store
 
+parking.csv
+parking.json
+properties.csv
+population.txt
