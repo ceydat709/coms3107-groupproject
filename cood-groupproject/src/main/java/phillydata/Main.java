@@ -7,7 +7,6 @@ import phillydata.processing.*;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 public class Main {
 
@@ -55,15 +54,11 @@ public class Main {
             parkingViolationReader = new JSONParkingViolationReader();
         }
 
-        List<Population> populationData = PopulationReader.getInstance().getPopulations(populationFile);
-        List<Property> propertyData = PropertyReader.getInstance().getProperties(propertiesFile);
-        List<ParkingViolation> parkingData = parkingViolationReader.getParkingViolations(parkingFile);
-
         PopulationProcessor populationProcessor = new PopulationProcessor(PopulationReader.getInstance(), populationFile);
-        FinesPerCapitalProcessor finesPerCapitalProcessor = new FinesPerCapitalProcessor(parkingData, populationData);
+        FinesPerCapitalProcessor finesPerCapitalProcessor = new FinesPerCapitalProcessor(parkingViolationReader, parkingFile, PopulationReader.getInstance(), populationFile);
         AvgMarketValueProcessor avgMarketValueProcessor = new AvgMarketValueProcessor(PropertyReader.getInstance(), propertiesFile);
-        AvgLivableAreaProcessor avgLivableAreaProcessor = new AvgLivableAreaProcessor(propertyData);
-        MarketValuePerCapitalProcessor marketValuePerCapitalProcessor = new MarketValuePerCapitalProcessor(propertyData, populationData);
+        AvgLivableAreaProcessor avgLivableAreaProcessor = new AvgLivableAreaProcessor(PropertyReader.getInstance(), propertiesFile);
+        MarketValuePerCapitalProcessor marketValuePerCapitalProcessor = new MarketValuePerCapitalProcessor(PropertyReader.getInstance(), propertiesFile, PopulationReader.getInstance(), populationFile);
 
         UI ui = new UI (populationProcessor, finesPerCapitalProcessor, avgMarketValueProcessor, avgLivableAreaProcessor, marketValuePerCapitalProcessor);
         ui.run();
