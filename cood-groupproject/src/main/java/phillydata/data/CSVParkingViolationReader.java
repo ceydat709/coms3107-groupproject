@@ -8,11 +8,21 @@ import phillydata.common.ParkingViolation;
 
 
 public class CSVParkingViolationReader implements ParkingViolationReaderStrategy {
+    
+    private String validZip(String zipcode) {
+        if (zipcode == null) return null;
+        if (zipcode.length() < 5) return zipcode;
+        return zipcode.substring(0, 5);
+    }
+
     @Override
     public List<ParkingViolation> getParkingViolations(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             List<ParkingViolation> violations = new ArrayList<>();
-            String line;
+            String line = br.readLine();
+            if (line == null) {
+                return violations;
+            }
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",", -1);
@@ -30,6 +40,8 @@ public class CSVParkingViolationReader implements ParkingViolationReaderStrategy
                 } catch (NumberFormatException e) {
                     fine = 0;
                 }
+
+                zipcode = validZip(zipcode);
                 ParkingViolation pv = new ParkingViolation(timestamp, fine, description, vehicleId, state, violationId, zipcode);
                 violations.add(pv);
             }
