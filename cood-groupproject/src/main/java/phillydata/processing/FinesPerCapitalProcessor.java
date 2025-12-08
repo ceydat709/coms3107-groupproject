@@ -2,18 +2,27 @@ package phillydata.processing;
 
 import phillydata.common.ParkingViolation;
 import phillydata.common.Population;
+import phillydata.data.ParkingViolationReaderStrategy;
+import phillydata.data.PopulationReader;
 import java.util.*;
 
 public class FinesPerCapitalProcessor {
+    private ParkingViolationReaderStrategy parkingReader;
+    private PopulationReader populationReader;
     private List<ParkingViolation> violations;
     private List<Population> populations;
 
-    public FinesPerCapitalProcessor (List<ParkingViolation> violations, List<Population> populations) {
-        if (violations == null || populations == null) {
+    public FinesPerCapitalProcessor (ParkingViolationReaderStrategy parkingR, String parkingFile, PopulationReader populationR, String populationFile) {
+        if (parkingR == null || parkingFile == null || populationR == null || populationFile == null) {
             throw new IllegalArgumentException();
         }
-        this.violations = violations;
-        this.populations = populations;
+        this.parkingReader = parkingR;
+        this.populationReader = populationR;
+        this.violations = parkingReader.getParkingViolations(parkingFile);
+        this.populations = populationReader.getPopulations(populationFile);
+        if (violations == null || populations == null) {
+            throw new IllegalStateException();
+        }
     }
 
     public Map<String, Double> finesPerCapita() {

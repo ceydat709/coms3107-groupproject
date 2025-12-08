@@ -2,19 +2,28 @@ package phillydata.processing;
 
 import phillydata.common.Property;
 import phillydata.common.Population;
+import phillydata.data.PropertyReader;
+import phillydata.data.PopulationReader;
 import java.util.*;
 
 public class MarketValuePerCapitalProcessor {
+    private PropertyReader propertyReader;
+    private PopulationReader populationReader;
     private List<Property> properties;
     private List<Population> populations;
     private Map<String, Integer> memo = new HashMap<>();
 
-    public MarketValuePerCapitalProcessor(List<Property> properties, List<Population> populations) {
-        if (properties == null || populations == null) {
+    public MarketValuePerCapitalProcessor(PropertyReader propertyR, String propertiesFile, PopulationReader populationR, String populationFile) {
+        if (propertyR == null || propertiesFile == null || populationR == null || populationFile == null) {
             throw new IllegalArgumentException();
         }
-        this.properties = properties;
-        this.populations = populations;
+        this.propertyReader = propertyR;
+        this.populationReader = populationR;
+        this.properties = propertyReader.getProperties(propertiesFile);
+        this.populations = populationReader.getPopulations(populationFile);
+        if (properties == null || populations == null) {
+            throw new IllegalStateException();
+        }
     }
 
     public int marketValuePerCapita(String zipCode) {

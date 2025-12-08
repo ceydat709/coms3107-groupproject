@@ -1,17 +1,23 @@
 package phillydata.processing;
 
 import phillydata.common.Property;
+import phillydata.data.PropertyReader;
 import java.util.*;
 
 public class AvgLivableAreaProcessor {
+    private PropertyReader propertyReader;
     private List<Property> properties;
     private Map<String, Integer> memo = new HashMap<>();
 
-    public AvgLivableAreaProcessor(List<Property> properties) {
-        if (properties == null) {
+    public AvgLivableAreaProcessor(PropertyReader propertyR, String filename) {
+        if (propertyR == null || filename == null) {
             throw new IllegalArgumentException();
         }
-        this.properties = properties;
+        this.propertyReader = propertyR;
+        this.properties = propertyReader.getProperties(filename);
+        if (properties == null) {
+            throw new IllegalStateException();
+        }
     }
 
     public int avgLivableArea(String zipCode) {
