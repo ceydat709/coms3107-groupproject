@@ -4,7 +4,7 @@ import phillydata.common.*;
 import phillydata.data.PopulationReader;
 public class PopulationProcessor{
     private PopulationReader populationReader;
-    private List<Populations> populations;
+    private List<Population> populations;
     public PopulationProcessor(PopulationReader populationR, String filename){
         if (populationR==null || filename==null){
             throw new IllegalArgumentException();

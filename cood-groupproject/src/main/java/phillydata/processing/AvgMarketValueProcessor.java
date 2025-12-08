@@ -1,6 +1,8 @@
 package phillydata.processing;
-import phillydata.data.PropertyReader;
+import java.util.List;
+
 import phillydata.common.Property;
+import phillydata.data.PropertyReader;
 
 public class AvgMarketValueProcessor {
     private PropertyReader propertyReader;
@@ -21,8 +23,8 @@ public class AvgMarketValueProcessor {
         double total = 0;
         int count = 0;
         for (Property p: properties){
-            if (p.getZipCode() == zipCode && p.getZipCode() != -1 && p.getMarketValue() != -1){
-                total += p.getMarketValue();
+            if (p.getZip_code() == zipCode && p.getZip_code() != -1 && p.getMarket_value() != -1){
+                total += p.getMarket_value();
                 count++;
             }
         }
