@@ -51,7 +51,7 @@ public class UI {
                     }
                     break;
                 case 3:
-                    System.out.println("Enter ZIP Code:");
+                    System.out.println("Enter ZIP Code: ");
                     String zipMarketValue = sc.nextLine().trim();
                     try {
                         int zipAsInt = Integer.parseInt(zipMarketValue);
@@ -61,13 +61,13 @@ public class UI {
                     }
                     break;
                 case 4:
-                    System.out.println("Enter ZIP Code:");
+                    System.out.println("Enter ZIP Code: ");
                     String zipLivableArea = sc.nextLine().trim();
                     System.out.println(avgLivableAreaProcessor.avgLivableArea(zipLivableArea));
                     break;
 
                 case 5:
-                    System.out.println("Enter ZIP Code:");
+                    System.out.println("Enter ZIP Code: ");
                     String zipPerCapita = sc.nextLine().trim();
                     System.out.println(marketValuePerCapitalProcessor.marketValuePerCapita(zipPerCapita));
                     break;
